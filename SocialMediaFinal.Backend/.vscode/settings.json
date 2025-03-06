@@ -1,0 +1,11 @@
+{
+    "vim.disableExtension": false,
+    "editor.formatOnSave": true,
+    "git.confirmSync": false,
+    "[csharp]": {
+      "editor.defaultFormatter": "ms-dotnettools.csharp"
+    },
+    "[json][jsonc]": {
+      "editor.defaultFormatter": "esbenp.prettier-vscode"
+    }
+  }
