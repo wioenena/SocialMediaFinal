@@ -1,3 +1,7 @@
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using SocialMediaFinal.Backend.Application.Features.Auth.Account.CreateAccount;
+
 namespace SocialMediaFinal.Backend.API.Routes.Auth;
 
 public static class AccountRouter {
@@ -6,10 +10,9 @@ public static class AccountRouter {
                         .MapGroup("/auth/account")
                         .WithTags("Account");
 
-        _ = group.MapGet("/register", Register).WithName("Register");
+        _ = group.MapPost("/register", Register).WithName("Register");
     }
 
-    private static IResult Register() => Results.Ok(new {
-        message = "Registration endpoint is not implemented yet."
-    });
+    private static async Task<IResult> Register([FromBody] CreateAccountRequest request, [FromServices] ISender sender, CancellationToken cancellationToken) =>
+        Results.Ok(await sender.Send(request, cancellationToken));
 }

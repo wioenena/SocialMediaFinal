@@ -1,10 +1,9 @@
-
-
 using Scalar.AspNetCore;
 using SocialMediaFinal.Backend.API.Configurations;
 using SocialMediaFinal.Backend.API.Middlewares;
 using SocialMediaFinal.Backend.API.Routes.Auth;
 using SocialMediaFinal.Backend.Application;
+using SocialMediaFinal.Backend.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 var environment = builder.Environment.EnvironmentName;
@@ -17,6 +16,7 @@ builder.Configuration
 
 builder.Services.AddOpenApi();
 builder.Services.AddApplicationServices(builder.Configuration);
+builder.Services.AddPersistenceServices();
 builder.Services.ApplyCORSConfiguration();
 builder.Services.ApplySerilogConfiguration();
 builder.Services.ApplyJWTConfiguration(isDevelopment);
