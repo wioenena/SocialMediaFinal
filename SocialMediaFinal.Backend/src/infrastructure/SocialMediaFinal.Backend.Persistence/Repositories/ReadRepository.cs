@@ -12,4 +12,15 @@ internal sealed class ReadRepository<TEntity>(ApplicationDbContext context) : Re
     public async Task<IEnumerable<TEntity>> GetAllAsync() => await this.Table.ToListAsync();
 
     public async Task<TEntity?> GetByIdAsync(Guid id) => await this.Table.FindAsync(id);
+    public IQueryable<TEntity> GetQueryable(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] includes) {
+        if (includes is not null && includes.Length > 0) {
+            var query = this.Table.AsQueryable();
+            foreach (var include in includes) {
+                query = query.Include(include);
+            }
+            return query.Where(filter);
+        } else {
+            return this.Table.Where(filter);
+        }
+    }
 }

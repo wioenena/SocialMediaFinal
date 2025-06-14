@@ -2,6 +2,7 @@
 using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 using SocialMediaFinal.Backend.Persistence.Contexts;
@@ -11,9 +12,11 @@ using SocialMediaFinal.Backend.Persistence.Contexts;
 namespace SocialMediaFinal.Backend.Persistence.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250614094212_mig_4")]
+    partial class mig_4
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -111,9 +114,6 @@ namespace SocialMediaFinal.Backend.Persistence.Migrations
                         .HasColumnType("uuid")
                         .HasColumnName("id");
 
-                    b.Property<Guid?>("AccountEntityId")
-                        .HasColumnType("uuid");
-
                     b.Property<Guid>("AuthorId")
                         .HasColumnType("uuid");
 
@@ -139,7 +139,7 @@ namespace SocialMediaFinal.Backend.Persistence.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccountEntityId");
+                    b.HasIndex("AuthorId");
 
                     b.ToTable("PostEntity");
                 });
@@ -157,9 +157,13 @@ namespace SocialMediaFinal.Backend.Persistence.Migrations
 
             modelBuilder.Entity("SocialMediaFinal.Backend.Domain.Entities.Post.PostEntity", b =>
                 {
-                    b.HasOne("SocialMediaFinal.Backend.Domain.Entities.Account.AccountEntity", null)
+                    b.HasOne("SocialMediaFinal.Backend.Domain.Entities.Account.AccountEntity", "Author")
                         .WithMany("Posts")
-                        .HasForeignKey("AccountEntityId");
+                        .HasForeignKey("AuthorId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Author");
                 });
 
             modelBuilder.Entity("SocialMediaFinal.Backend.Domain.Entities.Account.AccountEntity", b =>

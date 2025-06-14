@@ -30,10 +30,12 @@ if (isDevelopment) {
     _ = app.MapScalarApiReference();
 }
 
+app.UseCors();
 app.UseAuthentication();
 app.UseAuthorization();
 app.UseMiddleware<ExceptionMiddleware>();
 app.MapAccountRoutes();
+app.MapPostRoutes();
 
 
 app.Run();

@@ -50,3 +50,4 @@ dotnet_style_qualification_for_event = true
 csharp_style_expression_bodied_methods = true
 csharp_prefer_braces = when_multiline
 dotnet_diagnostic.IDE1006.severity = none
+dotnet_diagnostic.CA2201.severity = none

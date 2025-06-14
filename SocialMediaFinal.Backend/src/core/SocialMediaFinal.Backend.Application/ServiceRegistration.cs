@@ -18,6 +18,7 @@ public static class ServiceRegistration {
             _ = o.AddOpenBehavior(typeof(ValidationBehavior<,>));
         });
         _ = services.AddSingleton<IPasswordService, PasswordService>();
+        _ = services.AddSingleton<IJWTService, JWTService>();
         _ = services.Configure<JWTOptions>(configuration.GetSection("JWTSettings"));
         return services;
     }

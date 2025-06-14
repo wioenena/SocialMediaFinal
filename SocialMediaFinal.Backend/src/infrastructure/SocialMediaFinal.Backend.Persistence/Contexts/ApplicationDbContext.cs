@@ -10,7 +10,8 @@ public class ApplicationDbContext(IConfiguration configuration, ILoggerFactory l
     private readonly ILoggerFactory loggerFactory = loggerFactory;
 
     protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder) {
-        _ = optionsBuilder.UseNpgsql(this.configuration.GetConnectionString("PostgreSQL"))
+        _ = optionsBuilder
+        .UseNpgsql(this.configuration.GetConnectionString("PostgreSQL"))
         .EnableDetailedErrors()
         .UseLoggerFactory(this.loggerFactory);
 
